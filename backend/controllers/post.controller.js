@@ -7,7 +7,7 @@ export const getFeedPosts = async (req, res) => {
         const posts = await Post
             .find(
                 {
-                    author: {$in: req.user.connections}
+                    author: {$in: [...req.user.connections, req.user._id]}
                 }
             )
             .populate( // super useful

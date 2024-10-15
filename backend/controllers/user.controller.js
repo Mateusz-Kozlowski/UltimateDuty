@@ -6,7 +6,7 @@ export const getSuggestedConnections = async (req, res) => {
         const currentUser = await User.findById(req.user._id).select("connections");
 
         // find other users who are not already connected:
-        const suggestedUsers = await User.find(
+        const suggestedUser = await User.find(
             {
                 _id: { // filter by id
                     $ne: req.user._id, // not equal

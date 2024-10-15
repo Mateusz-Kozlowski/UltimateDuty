@@ -1,3 +1,5 @@
+import Notification from "../models/notification.model.js";
+
 export const getUserNotifications = async (req, res) => {
     try {
         const notifications = await Notification
