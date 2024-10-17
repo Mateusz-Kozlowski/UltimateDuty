@@ -29,6 +29,7 @@ export const getFeedPosts = async (req, res) => {
 }
 
 export const createPost = async (req, res) => {
+    console.log('createPost has been called');
     try {
         const {content, image} = req.body;
 
@@ -64,6 +65,7 @@ export const createPost = async (req, res) => {
 }
 
 export const deletePost = async (req, res) => {
+    console.log('delete post has been called!');
     try {
         const postId = req.params.id;
         const userId = req.user._id;
@@ -200,7 +202,7 @@ export const likePost = async (req, res) => {
                     }
                 )
 
-                await Notification.save();
+                await newNotification.save();
             }
         }
 
