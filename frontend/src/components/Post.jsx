@@ -4,6 +4,7 @@ import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { Link, useParams } from "react-router-dom";
 import { Loader, MessageCircle, Send, Share2, ThumbsUp, Trash2 } from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
 
 import PostAction from "./PostAction";
 
@@ -97,6 +98,16 @@ const Post = ({ post }) => {
 								className='size-10 rounded-full mr-3'
 							/>
 						</Link>
+
+						<div>
+							<Link to={`/profile/${post?.author?.username}`}>
+								<h3 className='font-semibold'>{post.author.name}</h3>
+							</Link>
+							<p className='text-xs text-info'>{post.author.headline}</p>
+							<p className='text-xs text-info'>
+								{formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+							</p>
+						</div>
 					</div>
 					{isOwner && (
 						<button onClick={handleDeletePost} className='text-red-500 hover:text-red-700'>
