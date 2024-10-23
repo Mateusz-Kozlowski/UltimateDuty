@@ -1,6 +1,7 @@
 import cloudinary from "../lib/cloudinary.js";
 import Post from "../models/post.model.js";
 import Notification from "../models/notification.model.js";
+import { sendCommentNotificationEmail } from "../emails/emailHandlers.js";
 
 export const getFeedPosts = async (req, res) => {
     try {
@@ -140,7 +141,7 @@ export const createComment = async (req, res) => {
             );
 
         // create a notification if the comment owner is not the post owner:
-        if (post.author.toString() !== req.user._id.toString()) {
+        if (post.author._id.toString() !== req.user._id.toString()) {
             const newNotification = new Notification(
                 {
                     recipient: post.author,
