@@ -6,6 +6,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import NetworkPage from "./pages/NetworkPage";
+import PostPage from "./pages/PostPage";
 import toast, { Toaster } from "react-hot-toast";
 
 import { useQuery } from "@tanstack/react-query";
@@ -45,6 +46,7 @@ function App() {
       <Route path='/login' element={ !authUser ? <LoginPage /> : <Navigate to={"/"} /> } />
       <Route path='/notifications' element={ authUser ? <NotificationsPage /> : <Navigate to={"/"} /> } />
       <Route path='/network' element={authUser ? <NetworkPage /> : <Navigate to={"/login"} />} />
+      <Route path='/post/:postId' element={authUser ? <PostPage /> : <Navigate to={"/login"} />} />
     </Routes>
     <Toaster />
   </Layout>);
