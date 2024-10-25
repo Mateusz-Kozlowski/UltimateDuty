@@ -46,7 +46,7 @@ export const signup = async (req, res) => {
         );
 
         res.cookie(
-            "jwt-linkedin",
+            "jwt-UltimateDuty",
             token,
             {
                 httpOnly: true, // prevent XSS attack
@@ -97,7 +97,7 @@ export const login = async (req, res) => {
             { expiresIn: "3d" }
         );
         await res.cookie(
-            "jwt-linkedin",
+            "jwt-UltimateDuty",
             token,
             {
                 httpOnly: true,
@@ -116,7 +116,7 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-    res.clearCookie("jwt-linkedin");
+    res.clearCookie("jwt-UltimateDuty");
     res.json(
         {
             message: "Logged out successfully"
