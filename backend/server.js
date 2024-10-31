@@ -38,7 +38,7 @@ app.use("/api/v1/posts", postRoutes);
 app.use("/api/v1/notifications", notificationRoutes);
 app.use("/api/v1/connections", connectionsRoutes);
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "development") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
     app.get(
         "*",

@@ -3,7 +3,57 @@ import Post from "../models/post.model.js";
 import Notification from "../models/notification.model.js";
 import { sendCommentNotificationEmail } from "../emails/emailHandlers.js";
 
-export const getFeedPosts = async (req, res) => {
+export const getPublicPosts = async (req, res) => {
+    try {
+        const posts = await Post
+            .find()
+            .populate( // super useful
+                "author",
+                "name username profilePicture headline"
+            )
+            .populate(
+                "comments.user",
+                "name profilePicture"
+            )
+            .sort({ createdAt: -1});
+
+        const filteredPosts = posts.filter(post => post.author !== null);
+
+        res.status(200).json(filteredPosts);
+    }
+    catch (error) {
+        console.error("Error in getPublicPosts controller:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+}
+
+export const getPersonalizedExploreFeed = async (req, res) => {
+    try {
+        const posts = await Post
+            .find()
+            .populate( // super useful
+                "author",
+                "name username profilePicture headline"
+            )
+            .populate(
+                "comments.user",
+                "name profilePicture"
+            )
+            .sort({ createdAt: -1});
+
+        const filteredPosts = posts.filter(post => post.author !== null);
+        
+        console.log('personalized posts', filteredPosts.length);
+
+        res.status(200).json(filteredPosts);
+    }
+    catch (error) {
+        console.error("Error in getPersonalizedExploreFeed controller:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+}
+
+export const getNetworkPosts = async (req, res) => {
     try {
         const posts = await Post
             .find(
@@ -21,10 +71,14 @@ export const getFeedPosts = async (req, res) => {
             )
             .sort({ createdAt: -1});
 
-        res.status(200).json(posts);
+        const filteredPosts = posts.filter(post => post.author !== null);
+
+        console.log('network posts', filteredPosts.length);
+
+        res.status(200).json(filteredPosts);
     }
     catch (error) {
-        console.error("Error in getFeedPosts controller:", error);
+        console.error("Error in getNetworkPosts controller:", error);
         res.status(500).json({ message: "Server error" });
     }
 }

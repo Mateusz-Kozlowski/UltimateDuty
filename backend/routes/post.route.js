@@ -1,10 +1,12 @@
 import express from "express";
 import { protectRoute } from "../middleware/auth.middleware.js";
-import { getFeedPosts, deletePost, createPost, getPostById, createComment, likePost } from "../controllers/post.controller.js";
+import { getPublicPosts, getPersonalizedExploreFeed, getNetworkPosts, deletePost, createPost, getPostById, createComment, likePost } from "../controllers/post.controller.js";
 
 const router = express.Router();
 
-router.get("/", protectRoute, getFeedPosts);
+router.get("/explore/public", getPublicPosts);
+router.get("/explore/personalized", protectRoute, getPersonalizedExploreFeed);
+router.get("/network", protectRoute, getNetworkPosts);
 router.post("/create", protectRoute, createPost);
 router.delete("/delete/:id", protectRoute, deletePost);
 router.get("/:id", protectRoute, getPostById);

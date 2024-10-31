@@ -5,8 +5,9 @@ import PostCreation from "../components/PostCreation";
 import Post from "../components/Post";
 import { Users } from "lucide-react";
 import RecommendedUser from "../components/RecommendedUser";
+import { useEffect } from 'react';
 
-const HomePage = () => {
+const FeedPage = ({ queryType }) => {
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
 	const { data: recommendedUsers } = useQuery({
@@ -17,24 +18,33 @@ const HomePage = () => {
 		},
 	});
 
-	const { data: posts } = useQuery({
+	const postsRoute = queryType === "explore" 
+        ? (authUser ? "/posts/explore/personalized" : "/posts/explore/public") 
+        : "/posts/network";
+
+	console.log('postsRoute=', postsRoute);
+
+	const { data: posts, refetch } = useQuery({
 		queryKey: ["posts"],
 		queryFn: async () => {
-			const res = await axiosInstance.get("/posts");
+			const res = await axiosInstance.get(postsRoute);
 			return res.data;
 		},
 	});
 
-	console.log("posts", posts);
+	// Use useEffect to refetch posts when queryType changes
+	useEffect(() => {
+        refetch();
+    }, [queryType, refetch]);
 
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
 			<div className='hidden lg:block lg:col-span-1'>
-				<Sidebar user={authUser} />
+				{authUser && <Sidebar user={authUser} />}
 			</div>
 
 			<div className='col-span-1 lg:col-span-2 order-first lg:order-none'>
-				<PostCreation user={authUser} />
+				{authUser && <PostCreation user={authUser} />}
 
 				{posts?.map((post) => (
 					<Post key={post._id} post={post} />
@@ -51,7 +61,7 @@ const HomePage = () => {
 				)}
 			</div>
 
-			{recommendedUsers?.length > 0 && (
+			{recommendedUsers?.length > 0 && !!authUser && (
 				<div className='col-span-1 lg:col-span-1 hidden lg:block'>
 					<div className='bg-secondary rounded-lg shadow p-4'>
 						<h2 className='font-semibold mb-4'>People you may know</h2>
@@ -64,4 +74,4 @@ const HomePage = () => {
 		</div>
 	);
 };
-export default HomePage;
+export default FeedPage;

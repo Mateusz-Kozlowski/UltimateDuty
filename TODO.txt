@@ -1,0 +1,1 @@
+- remove sidebar, it's non minimalistic since there is a navbar already

@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 
-import HomePage from "./pages/HomePage";
+import FeedPage from "./pages/FeedPage";
 import LoginPage from "./pages/auth/LoginPage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import NotificationsPage from "./pages/NotificationsPage";
@@ -32,17 +32,14 @@ function App() {
 		},
 	});
 
-  console.log('is loading=', isLoading);
-
   if (isLoading) {
     return null;
   }
-  
-  console.log("authUser=", authUser);
-  
+
   return (<Layout>
     <Routes>
-      <Route path='/' element={ authUser ? <HomePage/> : <Navigate to={'/login'} /> } />
+      <Route path='/' element={ authUser ? <FeedPage queryType="network"/> : <Navigate to={'/login'} /> } />
+      <Route path='/explore' element={ <FeedPage queryType="explore" /> } />
       <Route path='/signup' element={ !authUser ? <SignUpPage /> : <Navigate to={"/"} /> } />
       <Route path='/login' element={ !authUser ? <LoginPage /> : <Navigate to={"/"} /> } />
       <Route path='/notifications' element={ authUser ? <NotificationsPage /> : <Navigate to={"/"} /> } />

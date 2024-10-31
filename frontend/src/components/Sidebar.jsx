@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Home, UserPlus, Bell } from "lucide-react";
+import { Home, Compass, UserPlus, Bell } from "lucide-react";
 
 export default function Sidebar({ user }) {
     return (
@@ -35,10 +35,18 @@ export default function Sidebar({ user }) {
 						</li>
 						<li>
 							<Link
+								to='/explore'
+								className='flex items-center py-2 px-4 rounded-md hover:bg-primary hover:text-white transition-colors'
+							>
+								<Compass className='mr-2' size={20} /> Explore
+							</Link>
+						</li>
+						<li>
+							<Link
 								to='/network'
 								className='flex items-center py-2 px-4 rounded-md hover:bg-primary hover:text-white transition-colors'
 							>
-								<UserPlus className='mr-2' size={20} /> My Network
+								<UserPlus className='mr-2' size={20} /> Manage Network
 							</Link>
 						</li>
 						<li>
