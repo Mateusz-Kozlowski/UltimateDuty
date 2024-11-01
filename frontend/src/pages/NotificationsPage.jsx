@@ -7,7 +7,6 @@ import { formatDistanceToNow } from "date-fns";
 
 const NotificationsPage = () => {
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
-
 	const queryClient = useQueryClient();
 
 	const { data: notifications, isLoading } = useQuery({
@@ -33,12 +32,11 @@ const NotificationsPage = () => {
 	const renderNotificationIcon = (type) => {
 		switch (type) {
 			case "like":
-				return <ThumbsUp className='text-blue-500' />;
-
+				return <ThumbsUp className="text-primary" />;
 			case "comment":
-				return <MessageSquare className='text-green-500' />;
+				return <MessageSquare className="text-green-500" />;
 			case "connectionAccepted":
-				return <UserPlus className='text-purple-500' />;
+				return <UserPlus className="text-purple-500" />;
 			default:
 				return null;
 		}
@@ -49,13 +47,13 @@ const NotificationsPage = () => {
 			case "like":
 				return (
 					<span>
-						<strong>{notification.relatedUser.name}</strong> liked your post
+						<strong className="text-neutral-content">{notification.relatedUser.name}</strong> liked your post
 					</span>
 				);
 			case "comment":
 				return (
 					<span>
-						<Link to={`/profile/${notification.relatedUser.username}`} className='font-bold'>
+						<Link to={`/profile/${notification.relatedUser.username}`} className="font-bold text-primary">
 							{notification.relatedUser.name}
 						</Link>{" "}
 						commented on your post
@@ -64,7 +62,7 @@ const NotificationsPage = () => {
 			case "connectionAccepted":
 				return (
 					<span>
-						<Link to={`/profile/${notification.relatedUser.username}`} className='font-bold'>
+						<Link to={`/profile/${notification.relatedUser.username}`} className="font-bold text-primary">
 							{notification.relatedUser.name}
 						</Link>{" "}
 						accepted your connection request
@@ -81,89 +79,92 @@ const NotificationsPage = () => {
 		return (
 			<Link
 				to={`/post/${relatedPost._id}`}
-				className='mt-2 p-2 bg-gray-50 rounded-md flex items-center space-x-2 hover:bg-gray-100 transition-colors'
+				className="mt-2 p-2 bg-neutral rounded-md flex items-center space-x-2 hover:bg-base-200 transition-colors"
 			>
 				{relatedPost.image && (
-					<img src={relatedPost.image} alt='Post preview' className='w-10 h-10 object-cover rounded' />
+					<img src={relatedPost.image} alt="Post preview" className="w-10 h-10 object-cover rounded" />
 				)}
-				<div className='flex-1 overflow-hidden'>
-					<p className='text-sm text-gray-600 truncate'>{relatedPost.content}</p>
+				<div className="flex-1 overflow-hidden">
+					<p className="text-sm text-neutral-content truncate">{relatedPost.content}</p>
 				</div>
-				<ExternalLink size={14} className='text-gray-400' />
+				<ExternalLink size={14} className="text-neutral-content" />
 			</Link>
 		);
 	};
 
 	return (
 		<div className="flex justify-center">
-    		<div className="w-full max-w-2xl bg-white rounded-lg shadow p-6">
-					<h1 className='text-2xl font-bold mb-6'>Notifications</h1>
+			<div className="w-full max-w-2xl bg-secondary text-neutral-content rounded-lg shadow p-6">
+				<h1 className="text-2xl text-white font-bold mb-6">Notifications</h1>
 
-					{isLoading ? (
-						<p>Loading notifications...</p>
-					) : notifications && notifications.data.length > 0 ? (
-						<ul>
-							{notifications.data.map((notification) => (
-								<li
-									key={notification._id}
-									className={`bg-white border rounded-lg p-4 my-4 transition-all hover:shadow-md ${
-										!notification.read ? "border-blue-500" : "border-gray-200"
-									}`}
-								>
-									<div className='flex items-start justify-between'>
-										<div className='flex items-center space-x-4'>
-											<Link to={`/profile/${notification.relatedUser.username}`}>
-												<img
-													src={notification.relatedUser.profilePicture || "/avatar.png"}
-													alt={notification.relatedUser.name}
-													className='w-12 h-12 rounded-full object-cover'
-												/>
-											</Link>
+				{isLoading ? (
+					<p>Loading notifications...</p>
+				) : notifications && notifications.data.length > 0 ? (
+					<ul>
+						{notifications.data.map((notification) => (
+							<li
+								key={notification._id}
+								className={`bg-base-100 rounded-lg p-4 my-4 transition-all hover:shadow-md ${
+									!notification.read ? "border-primary" : "border-neutral"
+								}`}
+							>
+								<div className="flex items-start justify-between">
+									<div className="flex items-center space-x-4">
+										<Link to={`/profile/${notification.relatedUser.username}`}>
+											<img
+												src={notification.relatedUser.profilePicture || "/avatar.png"}
+												alt={notification.relatedUser.name}
+												className="w-12 h-12 rounded-full object-cover"
+											/>
+										</Link>
 
-											<div>
-												<div className='flex items-center gap-2'>
-													<div className='p-1 bg-gray-100 rounded-full'>
-														{renderNotificationIcon(notification.type)}
-													</div>
-													<p className='text-sm'>{renderNotificationContent(notification)}</p>
+										<div>
+											<div className="flex items-center gap-2">
+												<div className="p-1 bg-base-200 rounded-full">
+													{renderNotificationIcon(notification.type)}
 												</div>
-												<p className='text-xs text-gray-500 mt-1'>
-													{formatDistanceToNow(new Date(notification.createdAt), {
-														addSuffix: true,
-													})}
+												<p className="text-sm text-info">
+													{renderNotificationContent(notification)}
 												</p>
-												{renderRelatedPost(notification.relatedPost)}
 											</div>
-										</div>
-
-										<div className='flex gap-2'>
-											{!notification.read && (
-												<button
-													onClick={() => markAsReadMutation(notification._id)}
-													className='p-1 bg-blue-100 text-blue-600 rounded hover:bg-blue-200 transition-colors'
-													aria-label='Mark as read'
-												>
-													<Eye size={16} />
-												</button>
-											)}
-
-											<button
-												onClick={() => deleteNotificationMutation(notification._id)}
-												className='p-1 bg-red-100 text-red-600 rounded hover:bg-red-200 transition-colors'
-												aria-label='Delete notification'
-											>
-												<Trash2 size={16} />
-											</button>
+											<p className="text-xs text-info mt-1">
+												{formatDistanceToNow(new Date(notification.createdAt), {
+													addSuffix: true,
+												})}
+											</p>
+											{renderRelatedPost(notification.relatedPost)}
 										</div>
 									</div>
-								</li>
-							))}
-						</ul>
-					) : (
-						<p>No notification at the moment.</p>
-					)}
-				</div>
+
+									<div className="flex gap-2">
+										{!notification.read && (
+											<button
+												onClick={() => markAsReadMutation(notification._id)}
+												className="p-1 bg-primary text-white rounded hover:bg-primary-dark transition-colors"
+												aria-label="Mark as read"
+											>
+												<Eye size={16} />
+											</button>
+										)}
+
+										<button
+											onClick={() => deleteNotificationMutation(notification._id)}
+											className="p-1 bg-transparent text-error hover:text-red-700 rounded hover:bg-error-dark transition-colors"
+											aria-label="Delete notification"
+										>
+											<Trash2 size={16} />
+										</button>
+									</div>
+								</div>
+							</li>
+						))}
+					</ul>
+				) : (
+					<p className="text-neutral-content">No notifications at the moment.</p>
+				)}
+			</div>
 		</div>
 	);
 };
+
 export default NotificationsPage;
