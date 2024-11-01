@@ -18,9 +18,8 @@ const NetworkPage = () => {
 	});
 
 	return (
-		<div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
-			<div className='col-span-1 lg:col-span-3'>
-				<div className='bg-secondary rounded-lg shadow p-6 mb-6'>
+		<div className="flex justify-center">
+    		<div className="w-full max-w-2xl bg-white rounded-lg shadow p-6">
 					<h1 className='text-2xl font-bold mb-6'>My Network</h1>
 
 					{connectionRequests?.data?.length > 0 ? (
@@ -56,7 +55,6 @@ const NetworkPage = () => {
 					)}
 				</div>
 			</div>
-		</div>
 	);
 };
 export default NetworkPage;

@@ -1,1 +1,2 @@
 - remove sidebar, it's non minimalistic since there is a navbar already
+- centre other pages, not only feed page, add people you may know to manage network (NetworkPage)

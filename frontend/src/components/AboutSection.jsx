@@ -8,41 +8,44 @@ const AboutSection = ({ userData, isOwnProfile, onSave }) => {
 		setIsEditing(false);
 		onSave({ about });
 	};
+
 	return (
-		<div className='bg-white shadow rounded-lg p-6 mb-6'>
-			<h2 className='text-xl font-semibold mb-4'>About</h2>
+		<div className="bg-secondary shadow rounded-lg p-6 mb-6 mx-auto text-neutral">
+			<h2 className="text-xl font-semibold mb-4 text-white">About</h2>
 			{isOwnProfile && (
-				<>
+				<div>
 					{isEditing ? (
-						<>
+						<div>
 							<textarea
 								value={about}
 								onChange={(e) => setAbout(e.target.value)}
-								className='w-full p-2 border rounded'
-								rows='4'
+								className="w-full p-2 bg-secondary text-neutral border border-info rounded focus:outline-none focus:ring-2 focus:ring-primary"
+								rows="4"
 							/>
-							<button
-								onClick={handleSave}
-								className='mt-2 bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark 
-								transition duration-300'
-							>
-								Save
-							</button>
-						</>
+							<div className="flex justify-end mt-2">
+								<button
+									onClick={handleSave}
+									className="bg-primary text-white py-2 px-4 rounded hover:bg-primary-dark transition duration-300"
+								>
+									Save
+								</button>
+							</div>
+						</div>
 					) : (
-						<>
-							<p>{userData.about}</p>
+						<div>
+							<p className="text-info">{userData.about || "No information provided."}</p>
 							<button
 								onClick={() => setIsEditing(true)}
-								className='mt-2 text-primary hover:text-primary-dark transition duration-300'
+								className="mt-2 text-primary hover:text-primary-dark transition duration-300"
 							>
 								Edit
 							</button>
-						</>
+						</div>
 					)}
-				</>
+				</div>
 			)}
 		</div>
 	);
 };
+
 export default AboutSection;

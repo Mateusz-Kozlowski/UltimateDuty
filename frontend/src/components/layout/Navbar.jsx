@@ -47,7 +47,7 @@ const Navbar = () => {
 					
 					<Link to='/network' className='text-neutral flex flex-col items-center relative'>
 						<Users size={20} />
-						<span className='text-xs hidden md:block'>Manage Network</span>
+						<span className='text-xs hidden md:block'>Network</span>
 						{unreadConnectionRequestsCount > 0 && (
 							<span className='absolute -top-1 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-1'>
 								{unreadConnectionRequestsCount}
@@ -70,7 +70,7 @@ const Navbar = () => {
 						<span className='text-xs hidden md:block'>Me</span>
 					</Link>
 
-					<button className='flex items-center space-x-1 text-sm text-gray-600 hover:text-gray-800' onClick={() => logout()}>
+					<button className='flex items-center space-x-1 text-sm text-neutral hover:text-gray-800' onClick={() => logout()}>
 						<LogOut size={20} />
 						<span className='hidden md:inline'>Logout</span>
 					</button>

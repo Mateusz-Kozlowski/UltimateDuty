@@ -95,9 +95,8 @@ const NotificationsPage = () => {
 	};
 
 	return (
-		<div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
-			<div className='col-span-1 lg:col-span-3'>
-				<div className='bg-white rounded-lg shadow p-6'>
+		<div className="flex justify-center">
+    		<div className="w-full max-w-2xl bg-white rounded-lg shadow p-6">
 					<h1 className='text-2xl font-bold mb-6'>Notifications</h1>
 
 					{isLoading ? (
@@ -164,7 +163,6 @@ const NotificationsPage = () => {
 						<p>No notification at the moment.</p>
 					)}
 				</div>
-			</div>
 		</div>
 	);
 };
