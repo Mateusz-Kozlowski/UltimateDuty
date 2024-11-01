@@ -20,10 +20,16 @@ const Navbar = () => {
 	});
 
 	const { mutate: logout } = useMutation({
-		mutationFn: () => axiosInstance.post("/auth/logout"),
+		mutationFn: () => {
+			axiosInstance.post("/auth/logout");
+		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["authUser"] });
+			window.location.reload();
 		},
+		onError: () => {
+			console.error("Logout failed", err);
+		}
 	});
 
 	const unreadNotificationCount = notifications?.data.filter((notif) => !notif.read).length;
@@ -31,7 +37,7 @@ const Navbar = () => {
 
 	return (
 		<nav className='bg-secondary shadow-md sticky top-0 z-10'>
-	<div className='max-w-screen-xl mx-auto px-4'>
+		<div className='max-w-screen-xl mx-auto px-4'>
 		<div className='flex justify-center items-center py-3 gap-10'>
 			{authUser ? (
 				<>
@@ -70,8 +76,9 @@ const Navbar = () => {
 						<span className='text-xs hidden md:block'>Me</span>
 					</Link>
 
-					<button className='flex items-center space-x-1 text-sm text-neutral hover:text-gray-800' onClick={() => logout()}>
+					<button className='flex items-center space-x-1 text-sm text-neutral hover:text-gray-500' onClick={() => logout()}>
 						<LogOut size={20} />
+
 						<span className='hidden md:inline'>Logout</span>
 					</button>
 				</>

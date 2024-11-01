@@ -39,7 +39,7 @@ function App() {
   return (<Layout>
     <Routes>
       <Route path='/' element={ authUser ? <FeedPage queryType="network"/> : <Navigate to={'/login'} /> } />
-      <Route path='/explore' element={ <FeedPage queryType="explore" /> } />
+      <Route path='/explore' element={ authUser ? <FeedPage queryType="explore" /> : <Navigate to={'/login'} /> } />
       <Route path='/signup' element={ !authUser ? <SignUpPage /> : <Navigate to={"/"} /> } />
       <Route path='/login' element={ !authUser ? <LoginPage /> : <Navigate to={"/"} /> } />
       <Route path='/notifications' element={ authUser ? <NotificationsPage /> : <Navigate to={"/"} /> } />

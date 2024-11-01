@@ -42,7 +42,7 @@ const SignUpForm = () => {
 				placeholder='Full name'
 				value={name}
 				onChange={(e) => setName(e.target.value)}
-				className='input input-bordered w-full'
+				className='input input-bordered w-full bg-base-100'
 				required
 			/>
 			<input
