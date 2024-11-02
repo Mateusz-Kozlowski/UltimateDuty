@@ -86,6 +86,8 @@ const Post = ({ post }) => {
 		}
 	};
 
+	console.log('post.sentiment:', post.sentiment);
+
 	return (
 		<div className='bg-secondary rounded-lg shadow mb-4'>
 			<div className='p-4'>
@@ -117,6 +119,39 @@ const Post = ({ post }) => {
 				</div>
 				<p className='mb-4'>{post.content}</p>
 				{post.image && <img src={post.image} alt='Post content' className='rounded-lg w-full mb-4' />}
+
+				<div className="flex flex-col items-center text-info">
+					{/* Star Rating */}
+					{post.sentiment?.star_rating && (
+						<div className="flex items-center">
+							<span>
+								Positivity: &nbsp;
+								{post.sentiment.star_rating.label.slice(-1)}
+								/2
+								({(post.sentiment.star_rating.score * 100).toFixed(1)}%)
+							</span>
+						</div>
+					)}
+
+					{/* Emotions */}
+					{post.sentiment?.emotion?.length > 0 && (
+						<div className="flex mb-6">
+							Emotion:&nbsp;{post.sentiment.emotion.map((emo, index) => (
+								<span key={index} className="flex items-center space-x-1">
+									<span>
+										{emo.label === "joy" && "😊"}
+										{emo.label === "sadness" && "😢"}
+										{emo.label === "anger" && "😡"}
+										{emo.label === "disgust" && "🤢"}
+										{emo.label === "fear" && "😨"}
+										{emo.label === "neutral" && "😶"}
+									</span>
+									<span>{emo.label}</span>
+								</span>
+							))}
+						</div>
+					)}
+				</div>
 
 				<div className='flex justify-between text-info'>
 					<PostAction

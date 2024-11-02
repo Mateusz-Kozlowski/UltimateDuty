@@ -1,0 +1,4 @@
+transformers
+torch
+fastapi  # or flask, if you're using Flask
+uvicorn  # for running FastAPI

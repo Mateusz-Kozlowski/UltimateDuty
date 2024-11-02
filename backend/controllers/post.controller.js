@@ -2,6 +2,7 @@ import cloudinary from "../lib/cloudinary.js";
 import Post from "../models/post.model.js";
 import Notification from "../models/notification.model.js";
 import { sendCommentNotificationEmail } from "../emails/emailHandlers.js";
+import axios from 'axios';
 
 export const getPublicPosts = async (req, res) => {
     try {
@@ -90,13 +91,21 @@ export const createPost = async (req, res) => {
 
         let newPost;
 
+        const { data: sentimentResult } = await axios.post(
+            process.env.SENTIMENT_ANALYSIS_URL, 
+            { text: content }
+        );
+
+        console.log('sentimentResult=', sentimentResult);
+
         if (image) {
             const imgResult = await cloudinary.uploader.upload(image);
             newPost = new Post(
                 {
                     author: req.user._id,
                     content,
-                    image: imgResult.secure_url
+                    image: imgResult.secure_url,
+                    sentiment: sentimentResult
                 }
             );
         }
@@ -104,7 +113,8 @@ export const createPost = async (req, res) => {
             newPost = new Post(
                 {
                     author: req.user._id,
-                    content
+                    content,
+                    sentiment: sentimentResult
                 }
             );
         }
