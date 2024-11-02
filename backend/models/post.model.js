@@ -13,6 +13,18 @@ const postSchema = new mongoose.Schema(
 				createdAt: { type: Date, default: Date.now },
 			},
 		],
+		sentiment: {
+			star_rating: {
+				label: { type: String },  // e.g., "1 star", "2 stars", etc.
+				score: { type: Number },  // Confidence score for the star rating
+			},
+			emotion: [
+				{
+					label: { type: String },  // e.g., "joy", "disgust", etc.
+					score: { type: Number },  // Confidence score for each emotion
+				},
+			],
+		},
 	},
 	{ timestamps: true }
 );

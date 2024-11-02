@@ -160,7 +160,7 @@ const NotificationsPage = () => {
 						))}
 					</ul>
 				) : (
-					<p className="text-neutral-content">No notifications at the moment.</p>
+					<p className="text-info">No notifications at the moment.</p>
 				)}
 			</div>
 		</div>
