@@ -85,49 +85,52 @@ export const getNetworkPosts = async (req, res) => {
 }
 
 export const createPost = async (req, res) => {
-    console.log('createPost has been called');
     try {
-        const {content, image} = req.body;
+        const { content, image } = req.body;
 
         let newPost;
+        let sentimentResult = null;
 
-        const { data: sentimentResult } = await axios.post(
-            process.env.SENTIMENT_ANALYSIS_URL, 
-            { text: content }
-        );
+        // Try to perform sentiment analysis
+        try {
+            const { data } = await axios.post(
+                process.env.SENTIMENT_ANALYSIS_URL,
+                { text: content }
+            );
+            sentimentResult = data;
+            console.log('Sentiment analysis result:', sentimentResult);
+        } catch (error) {
+            console.error('Sentiment analysis server unavailable, skipping sentiment analysis.');
+            // If the sentiment server is not reachable, continue without sentiment data
+        }
 
-        console.log('sentimentResult=', sentimentResult);
-
+        // Check if there's an image and upload if necessary
         if (image) {
             const imgResult = await cloudinary.uploader.upload(image);
-            newPost = new Post(
-                {
-                    author: req.user._id,
-                    content,
-                    image: imgResult.secure_url,
-                    sentiment: sentimentResult
-                }
-            );
-        }
-        else {
-            newPost = new Post(
-                {
-                    author: req.user._id,
-                    content,
-                    sentiment: sentimentResult
-                }
-            );
+            newPost = new Post({
+                author: req.user._id,
+                content,
+                image: imgResult.secure_url,
+                sentiment: sentimentResult
+            });
+        } else {
+            newPost = new Post({
+                author: req.user._id,
+                content,
+                sentiment: sentimentResult
+            });
         }
 
+        // Save the new post
         await newPost.save();
 
+        // Return the new post as the response
         res.status(201).json(newPost);
-    }
-    catch (error) {
+    } catch (error) {
         console.error("Error in createPost controller:", error);
         res.status(500).json({ message: "Server error" });
     }
-}
+};
 
 export const deletePost = async (req, res) => {
     console.log('delete post has been called!');

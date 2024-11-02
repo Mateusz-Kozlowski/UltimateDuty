@@ -1,3 +1,5 @@
 - making lasting changes to profile doesn't work. Are the changes saved in backend?
   I guess it's because of a model schema in backend which doesn't include the values
 - ability to add friends etc.
+- making creating posts failure-proof when sentiment analysis server isn't working correctly
+- incorporate Docker
