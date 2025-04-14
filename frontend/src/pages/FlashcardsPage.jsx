@@ -30,6 +30,7 @@ const FlashcardsPage = () => {
 
 	const handleNext = () => {
 		setCurrentCardIdx((prevIndex) => (prevIndex + 1) % flashcards.length);
+		setShowFront((prev) => true);
 	};
 
 	const reverse = () => {
@@ -38,34 +39,35 @@ const FlashcardsPage = () => {
 
 	const handlePrev = () => {
 		setCurrentCardIdx((prevIndex) => (prevIndex - 1 + flashcards.length) % flashcards.length);
+		setShowFront((prev) => true);
 	};
 
 	const currentCard = flashcards[currentCardIdx];
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-base-100 text-info p-6">
-			<div className="bg-secondary text-white p-6 rounded-lg shadow-lg w-full max-w-md text-center">
-				<div className="bg-secondary text-white p-6 rounded-lg shadow-lg w-full max-w-md text-center">
-    				{showFront ? (
-        				<h2 className="text-2xl font-bold mb-2">{currentCard.name}</h2>
-    				) : (
-        				<p className="text-md">{currentCard.description}</p>
-    				)}
+		<div className="flex flex-col items-center justify-start min-h-screen bg-base-900 text-info px-4 py-12">
+			<div className="w-full max-w-md">
+				{/* Flashcard */}
+				<div className="bg-neutral-800 text-white rounded-2xl shadow-lg p-8 text-center mb-10">
+					<h2 className="text-2xl md:text-3xl font-semibold tracking-wide">
+						{showFront ? currentCard.name : currentCard.description}
+					</h2>
+				</div>
+
+				{/* Navigation buttons */}
+				<div className="flex justify-center gap-4">
+					<button onClick={handlePrev} className="btn btn-outline btn-info w-28">
+						Previous
+					</button>
+					<button onClick={reverse} className="btn w-28 bg-gray-200 text-black hover:bg-gray-400 hover:text-black transition-colors duration-200">
+						Reverse
+					</button>
+					<button onClick={handleNext} className="btn btn-primary w-28">
+						Next
+					</button>
 				</div>
 			</div>
-
-			<div className="flex mt-6 gap-4">
-				<button onClick={handlePrev} className="btn btn-outline btn-info">
-					Previous
-				</button>
-				<button onClick={reverse} className="btn btn-primary">
-					Reverse
-				</button>
-				<button onClick={handleNext} className="btn btn-primary">
-					Next
-				</button>
-			</div>
 		</div>
-	);
+	);		
 };
 export default FlashcardsPage;
