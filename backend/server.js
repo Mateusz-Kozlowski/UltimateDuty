@@ -9,6 +9,7 @@ import userRoutes from "./routes/user.route.js";
 import postRoutes from "./routes/post.route.js";
 import notificationRoutes from "./routes/notification.route.js";
 import connectionsRoutes from "./routes/connection.route.js";
+import flashcardsRoutes from "./routes/flashcard.route.js";
 
 import { connectDB } from "./lib/db.js";
 
@@ -37,6 +38,7 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/posts", postRoutes);
 app.use("/api/v1/notifications", notificationRoutes);
 app.use("/api/v1/connections", connectionsRoutes);
+app.use("/api/v1/flashcards", flashcardsRoutes);
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));

@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
 import { Link } from "react-router-dom";
-import { Bell, Home, Compass, LogOut, User, Users } from "lucide-react";
+import { Bell, Home, Compass, LogOut, User, Users, Book } from "lucide-react";
 
 const Navbar = () => {
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
@@ -54,6 +54,16 @@ const Navbar = () => {
 					<Link to='/network' className='text-neutral flex flex-col items-center relative'>
 						<Users size={20} />
 						<span className='text-xs hidden md:block'>Network</span>
+						{unreadConnectionRequestsCount > 0 && (
+							<span className='absolute -top-1 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-1'>
+								{unreadConnectionRequestsCount}
+							</span>
+						)}
+					</Link>
+
+					<Link to='/learn/biases' className='text-neutral flex flex-col items-center relative'>
+						<Book size={20} />
+						<span className='text-xs hidden md:block'>Learn</span>
 						{unreadConnectionRequestsCount > 0 && (
 							<span className='absolute -top-1 -right-2 bg-blue-500 text-white text-xs rounded-full px-2 py-1'>
 								{unreadConnectionRequestsCount}

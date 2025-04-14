@@ -6,13 +6,13 @@ import LoginPage from "./pages/auth/LoginPage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import NotificationsPage from "./pages/NotificationsPage";
 import NetworkPage from "./pages/NetworkPage";
+import FlashcardsPage from "./pages/FlashcardsPage";
 import PostPage from "./pages/PostPage";
 import ProfilePage from "./pages/ProfilePage";
 import toast, { Toaster } from "react-hot-toast";
 
 import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "./lib/axios";
-import { Network } from "lucide-react";
 
 function App() {
   console.log('xd');
@@ -42,6 +42,7 @@ function App() {
       <Route path='/explore' element={ authUser ? <FeedPage queryType="explore" /> : <Navigate to={'/login'} /> } />
       <Route path='/signup' element={ !authUser ? <SignUpPage /> : <Navigate to={"/"} /> } />
       <Route path='/login' element={ !authUser ? <LoginPage /> : <Navigate to={"/"} /> } />
+      <Route path='/learn/:category' element={ authUser ? <FlashcardsPage /> : <Navigate to={"/"} /> } />
       <Route path='/notifications' element={ authUser ? <NotificationsPage /> : <Navigate to={"/"} /> } />
       <Route path='/network' element={authUser ? <NetworkPage /> : <Navigate to={"/login"} />} />
       <Route path='/post/:postId' element={authUser ? <PostPage /> : <Navigate to={"/login"} />} />
