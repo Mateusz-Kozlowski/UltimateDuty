@@ -21,7 +21,9 @@
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
     "mailtrap": "^3.4.0",
-    "mongoose": "^8.7.0"
+    "mongoose": "^8.7.0",
+    "react-datepicker": "^8.3.0",
+    "recharts": "^2.15.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"

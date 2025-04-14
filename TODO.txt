@@ -1,3 +1,12 @@
+- life dashboard:
+  * life satisfaction tracker
+  * priorities list
+  * affirmations reminders
+
+- group chats
+
+- adding real-life examples of cognitive biases by users
+
 - making lasting changes to profile doesn't work. Are the changes saved in backend?
   I guess it's because of a model schema in backend which doesn't include the values
 - ability to add friends etc.
